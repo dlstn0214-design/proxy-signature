@@ -423,20 +423,20 @@ const chunks = documents.flatMap((doc) => {
 });
 
 copyStatic();
-fs.writeFileSync(
-  path.join(distDir, "knowledge-base.json"),
-  JSON.stringify(
-    {
-      generatedAt: new Date().toISOString(),
-      policy: "두 PDF에서 추출한 내용만 근거로 답변합니다.",
-      documents: documents.map(({ pages, ...doc }) => doc),
-      chunks,
-    },
-    null,
-    2,
-  ),
-  "utf8",
+const knowledgeBase = JSON.stringify(
+  {
+    generatedAt: new Date().toISOString(),
+    policy: "두 PDF에서 추출한 내용만 근거로 답변합니다.",
+    documents: documents.map(({ pages, ...doc }) => doc),
+    chunks,
+  },
+  null,
+  2,
 );
+
+for (const outputDir of [distDir, __dirname]) {
+  fs.writeFileSync(path.join(outputDir, "knowledge-base.json"), knowledgeBase, "utf8");
+}
 
 console.log(`Built ${documents.length} documents, ${chunks.length} chunks.`);
 for (const doc of documents) {
