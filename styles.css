@@ -168,7 +168,7 @@ button {
 
 .composer button {
   padding: 0 18px;
-  background: #1f5d54;
+  background: #d62828;
   color: #fff;
 }
 
@@ -181,9 +181,9 @@ button {
 
 .chips button {
   padding: 9px 12px;
-  background: #fff3eb;
-  color: #874018;
-  border: 1px solid #f1d2be;
+  background: #fff0f0;
+  color: #a31621;
+  border: 1px solid #f0b4b4;
 }
 
 @media (max-width: 560px) {
