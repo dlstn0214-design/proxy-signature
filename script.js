@@ -168,8 +168,13 @@ function renderDocuments() {
 
 async function init() {
   try {
-    const response = await fetch("knowledge-base.json", { cache: "no-store" });
-    if (!response.ok) throw new Error("색인 파일을 불러오지 못했습니다.");
+    const candidates = ["knowledge-base.json", "dist/knowledge-base.json"];
+    let response = null;
+    for (const url of candidates) {
+      response = await fetch(url, { cache: "no-store" });
+      if (response.ok) break;
+    }
+    if (!response || !response.ok) throw new Error("색인 파일을 불러오지 못했습니다.");
     knowledgeBase = await response.json();
     renderDocuments();
     statusEl.textContent = `${knowledgeBase.chunks.length.toLocaleString()}개 근거 준비`;
