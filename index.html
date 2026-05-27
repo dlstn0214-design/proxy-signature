@@ -3,42 +3,62 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>인사 에이전트</title>
+    <title>패션 HR 백과사전</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="app">
-      <section class="panel" aria-label="인사 에이전트">
-        <header class="header">
+      <aside class="sidebar" aria-label="문서 정보">
+        <div class="brand">
+          <p>Closed-Book HR Assistant</p>
+          <h1>패션 HR 백과사전</h1>
+        </div>
+
+        <section class="source-panel">
+          <h2>사용 문서</h2>
+          <ul id="documentList" class="document-list"></ul>
+        </section>
+
+        <section class="source-panel">
+          <h2>답변 원칙</h2>
+          <p>두 PDF에서 찾은 근거만 사용합니다. 근거가 없으면 모른다고 답합니다.</p>
+        </section>
+      </aside>
+
+      <section class="workspace" aria-label="질의응답">
+        <header class="topbar">
           <div>
-            <p class="eyebrow">Greeting Agent</p>
-            <h1>인사 에이전트</h1>
+            <p class="eyebrow">SAP 매뉴얼 + 취업규칙 전용</p>
+            <h2>문서 내용만 검색해 답변합니다</h2>
           </div>
-          <span class="status" aria-label="온라인 상태">온라인</span>
+          <span id="status" class="status">색인 로딩</span>
         </header>
 
         <div id="chat" class="chat" aria-live="polite">
           <article class="message agent">
             <span class="avatar">AI</span>
-            <p>안녕하세요. 이름이나 상황을 알려주시면 자연스럽게 인사해드릴게요.</p>
+            <div class="bubble">
+              <p>질문을 입력하면 두 백과사전에서 근거를 찾아 답변합니다.</p>
+            </div>
           </article>
         </div>
 
-        <form id="greetingForm" class="composer">
+        <form id="askForm" class="composer">
           <input
-            id="userInput"
-            type="text"
+            id="questionInput"
+            type="search"
             autocomplete="off"
-            placeholder="예: 김민수, 첫 출근, 아침 회의"
-            aria-label="인사할 대상이나 상황"
+            placeholder="예: 연차휴가는 어떻게 계산해?"
+            aria-label="질문"
           />
-          <button type="submit">인사하기</button>
+          <button type="submit">질문</button>
         </form>
 
-        <div class="chips" aria-label="빠른 예시">
-          <button type="button" data-prompt="신입사원 지연님">신입사원</button>
-          <button type="button" data-prompt="아침 회의 참석자들">아침 회의</button>
-          <button type="button" data-prompt="오랜만에 만난 동료">오랜만</button>
+        <div class="quick-prompts" aria-label="예시 질문">
+          <button type="button" data-prompt="SAP에서 휴가 신청은 어떻게 처리해?">SAP 휴가 신청</button>
+          <button type="button" data-prompt="취업규칙상 근무시간과 휴게시간을 알려줘">근무시간</button>
+          <button type="button" data-prompt="퇴직 관련 규정 내용을 찾아줘">퇴직 규정</button>
+          <button type="button" data-prompt="증명서 발급 절차가 있으면 알려줘">증명서 발급</button>
         </div>
       </section>
     </main>
