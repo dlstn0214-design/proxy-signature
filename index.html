@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>인사 에이전트</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="panel" aria-label="인사 에이전트">
+        <header class="header">
+          <div>
+            <p class="eyebrow">Greeting Agent</p>
+            <h1>인사 에이전트</h1>
+          </div>
+          <span class="status" aria-label="온라인 상태">온라인</span>
+        </header>
+
+        <div id="chat" class="chat" aria-live="polite">
+          <article class="message agent">
+            <span class="avatar">AI</span>
+            <p>안녕하세요. 이름이나 상황을 알려주시면 자연스럽게 인사해드릴게요.</p>
+          </article>
+        </div>
+
+        <form id="greetingForm" class="composer">
+          <input
+            id="userInput"
+            type="text"
+            autocomplete="off"
+            placeholder="예: 김민수, 첫 출근, 아침 회의"
+            aria-label="인사할 대상이나 상황"
+          />
+          <button type="submit">인사하기</button>
+        </form>
+
+        <div class="chips" aria-label="빠른 예시">
+          <button type="button" data-prompt="신입사원 지연님">신입사원</button>
+          <button type="button" data-prompt="아침 회의 참석자들">아침 회의</button>
+          <button type="button" data-prompt="오랜만에 만난 동료">오랜만</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
