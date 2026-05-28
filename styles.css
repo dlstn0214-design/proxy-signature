@@ -6,7 +6,7 @@
     system-ui,
     -apple-system,
     sans-serif;
-  background: #f3f5f4;
+  background: #dff3ff;
   color: #17201d;
 }
 
@@ -32,7 +32,7 @@ button {
   min-height: 100vh;
   display: grid;
   grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
-  background: #f3f5f4;
+  background: #dff3ff;
 }
 
 .sidebar {
@@ -175,9 +175,9 @@ h2 {
   flex: 0 0 auto;
   display: grid;
   place-items: center;
-  width: 34px;
+  width: 54px;
   height: 34px;
-  border-radius: 50%;
+  border-radius: 999px;
   background: #1f5d54;
   color: #fff;
   font-size: 12px;
@@ -192,7 +192,7 @@ h2 {
 }
 
 .agent .bubble {
-  background: #eef5f2;
+  background: #ffffff;
   color: #18342e;
 }
 

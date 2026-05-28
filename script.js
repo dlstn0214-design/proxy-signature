@@ -56,7 +56,7 @@ function createMessage(type, content) {
   if (type === "agent") {
     const avatar = document.createElement("span");
     avatar.className = "avatar";
-    avatar.textContent = "AI";
+    avatar.textContent = "똑똑이";
     message.append(avatar);
   }
 
