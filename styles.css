@@ -205,14 +205,14 @@ h2 {
   margin: 0;
 }
 
-.evidence-list {
+.step-list {
   display: grid;
   gap: 12px;
   margin: 12px 0 0;
   padding-left: 22px;
 }
 
-.evidence-list li::marker {
+.step-list li::marker {
   font-weight: 900;
   color: #1f5d54;
 }
@@ -222,6 +222,12 @@ h2 {
   margin-top: 6px;
   color: #587067;
   font-size: 13px;
+  font-weight: 800;
+}
+
+.page-guide {
+  margin-top: 12px;
+  color: #245c4c;
   font-weight: 800;
 }
 

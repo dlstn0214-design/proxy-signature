@@ -95,6 +95,39 @@ function search(query) {
     .slice(0, 6);
 }
 
+function uniqueReferences(results) {
+  const seen = new Set();
+  return results
+    .map((result) => ({ title: result.title, page: result.page }))
+    .filter((ref) => {
+      const key = `${ref.title}-${ref.page}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+}
+
+function guidanceItems(results, limit = 5) {
+  const items = [];
+  for (const result of results) {
+    const sentences = result.text
+      .replace(/\s+/g, " ")
+      .split(/(?<=[.!?。]|다\.|요\.|함\.|음\.)\s+/)
+      .map((part) => part.trim())
+      .filter((part) => part.length >= 12);
+
+    for (const sentence of sentences.length ? sentences : [result.text]) {
+      items.push({
+        text: compact(sentence, 260),
+        title: result.title,
+        page: result.page,
+      });
+      if (items.length >= limit) return items;
+    }
+  }
+  return items;
+}
+
 function makeAnswer(results, query) {
   const wrapper = document.createElement("div");
   const top = results.slice(0, 3);
@@ -106,32 +139,47 @@ function makeAnswer(results, query) {
     return wrapper;
   }
 
-  intro.textContent = `"${query}"에 대해 문서에서 찾은 근거입니다. 아래 내용 외의 추정은 포함하지 않았습니다.`;
+  intro.textContent = `"${query}"는 문서 기준으로 다음 순서대로 처리하세요.`;
   wrapper.append(intro);
 
   const list = document.createElement("ol");
-  list.className = "evidence-list";
-  for (const result of top) {
+  list.className = "step-list";
+  const steps = guidanceItems(top);
+  for (const [index, step] of steps.entries()) {
     const item = document.createElement("li");
-    const quote = document.createElement("p");
-    quote.textContent = compact(result.text);
+    const action = document.createElement("p");
+    if (index === 0) {
+      action.textContent = `먼저 ${step.text}`;
+    } else if (index === steps.length - 1) {
+      action.textContent = `마지막으로 ${step.text}`;
+    } else {
+      action.textContent = `다음으로 ${step.text}`;
+    }
     const cite = document.createElement("span");
     cite.className = "citation";
-    cite.textContent = `${result.title} · p.${result.page}`;
-    item.append(quote, cite);
+    cite.textContent = `${step.title} · p.${step.page}`;
+    item.append(action, cite);
     list.append(item);
   }
   wrapper.append(list);
 
+  const references = uniqueReferences(top);
+  const pageGuide = document.createElement("p");
+  pageGuide.className = "page-guide";
+  pageGuide.textContent = `자세한 화면과 원문은 ${references
+    .map((ref) => `${ref.title} p.${ref.page}`)
+    .join(", ")} 페이지로 이동해 확인하세요.`;
+  wrapper.append(pageGuide);
+
   if (results.length > 3) {
     const more = document.createElement("details");
     const summary = document.createElement("summary");
-    summary.textContent = `추가 근거 ${results.length - 3}개`;
+    summary.textContent = `추가로 확인할 페이지 ${results.length - 3}개`;
     more.append(summary);
     for (const result of results.slice(3)) {
       const p = document.createElement("p");
       p.className = "more-evidence";
-      p.textContent = `${result.title} p.${result.page}: ${compact(result.text, 220)}`;
+      p.textContent = `${result.title} p.${result.page} 페이지로 이동해 ${compact(result.text, 220)} 내용을 확인하세요.`;
       more.append(p);
     }
     wrapper.append(more);
