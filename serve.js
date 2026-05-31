@@ -34,5 +34,5 @@ const server = http.createServer((request, response) => {
 });
 
 server.listen(port, () => {
-  console.log(`HR encyclopedia running at http://localhost:${port}`);
+  console.log(`HR signature MVP running at http://localhost:${port}`);
 });
